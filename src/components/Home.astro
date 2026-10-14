@@ -21,7 +21,7 @@ const copy = es ? {
   about: 'Ingeniero primero. Con criterio de UX en cada interfaz.',
   experience: 'Experiencia',
   contact: 'Hablemos', available: 'Disponible para trabajo remoto',
-  resume: 'Descargar CV', note: 'Sitio en desarrollo · 2026',
+  resume: 'Descargar CV', note: 'Hecho con Astro, Claude Code y Codex · 2026',
   details: 'Ver caso', source: 'Código', live: 'Demo', preparing: 'Caso en preparación',
 } : {
   nav: ['Work', 'About', 'Contact'],
@@ -34,11 +34,11 @@ const copy = es ? {
   about: 'Engineer first. With a UX mindset in every interface.',
   experience: 'Experience',
   contact: 'Let’s talk', available: 'Available for remote work',
-  resume: 'Download résumé', note: 'Site in progress · 2026',
+  resume: 'Download résumé', note: 'Built with Astro, Claude Code & Codex · 2026',
   details: 'Read case', source: 'Code', live: 'Live demo', preparing: 'Case in preparation',
 };
 const clients = [
-  'Sony', 'Santander', 'Accenture', 'Vetsource',
+  'Sony', 'Santander', 'Vetsource',
   'Attentive', 'Vidoomy', 'Aquia', 'Fox Rent a Car',
   'MM411', 'CPI Group', 'Albor',
 ];
@@ -53,6 +53,18 @@ const capabilities = es ? [
   ['03', 'AI-powered interfaces', 'LLM features, image generation and agents (OpenAI, Gemini, Claude) turned into clear user experiences.'],
   ['04', 'Fullstack & delivery', 'Node.js and Express APIs when the product needs them; CI/CD, E2E testing and technical leadership.'],
 ];
+const aiSteps = es ? [
+  ['01', 'Explorar', 'Uso Claude y Codex para recorrer codebases, comparar enfoques y bajar specs antes de escribir código.'],
+  ['02', 'Construir', 'Claude Code y Codex como pair programmers: componentes, refactors, tests y documentación, revisados línea por línea.'],
+  ['03', 'Verificar', 'Los agentes corren builds, tests E2E, auditorías de accesibilidad y Lighthouse antes de cada entrega.'],
+  ['04', 'Extender', 'Servidores MCP, skills y agentes propios que conectan la IA con las herramientas reales del equipo.'],
+] : [
+  ['01', 'Explore', 'I use Claude and Codex to map codebases, compare approaches and turn ideas into specs before writing code.'],
+  ['02', 'Build', 'Claude Code and Codex as pair programmers: components, refactors, tests and docs, reviewed line by line.'],
+  ['03', 'Verify', 'Agents run builds, E2E tests, accessibility audits and Lighthouse before anything ships.'],
+  ['04', 'Extend', 'MCP servers, skills and custom agents that plug AI into the team’s real tools.'],
+];
+const aiTools = ['Claude Code', 'Codex', 'Claude API', 'MCP', 'Agents & skills', 'Cursor', 'OpenAI', 'Gemini'];
 ---
 <BaseLayout lang={lang} title="Daniel De Ruvo · Senior Frontend Engineer" description={es ? 'Daniel De Ruvo: Senior Frontend Engineer. Interfaces rápidas, accesibles y con IA en React, Next.js y TypeScript.' : 'Daniel De Ruvo: Senior Frontend Engineer building fast, accessible, AI-powered interfaces with React, Next.js and TypeScript.'} alternate={`/${other}/`}>
   <div class="site-shell">
@@ -60,6 +72,7 @@ const capabilities = es ? [
       <a class="wordmark" href={`/${lang}/`} aria-label="ddra home">ddra<span aria-hidden="true"></span></a>
       <nav aria-label={es ? 'Navegación principal' : 'Main navigation'}>
         <a href="#selected-work">{copy.nav[0]}</a>
+        <a href="#ai">{es ? 'IA' : 'AI'}</a>
         <a href="#about">{copy.nav[1]}</a>
         <a href="#contact">{copy.nav[2]}</a>
       </nav>
@@ -132,9 +145,22 @@ const capabilities = es ? [
         <div class="capability-grid">{capabilities.map(([number, title, text]) => <article data-reveal><div class={`capability-symbol symbol-${number}`} aria-hidden="true"><i></i><i></i><i></i></div><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
       </section>
 
+      <section id="ai" class="ai-workflow" data-motion-section aria-labelledby="ai-title">
+        <div class="section-kicker">04 / {es ? 'Cómo trabajo con IA' : 'How I build with AI'}</div>
+        <h2 id="ai-title" data-reveal>{es ? <>Desarrollo con agentes<br /><em>en el loop.</em></> : <>I ship with AI agents<br /><em>in the loop.</em></>}</h2>
+        <p class="ai-intro" data-reveal>{es ? 'Claude Code y Codex son parte de mi día a día: me ayudan a entregar más rápido sin bajar la vara de calidad. En Making Sense llevé estos flujos al equipo y redujimos hasta un 40% el tiempo de entrega de MVPs.' : 'Claude Code and Codex are part of my daily workflow: they help me ship faster without lowering the quality bar. At Making Sense I brought these workflows to my team and we cut MVP delivery time by up to 40%.'}</p>
+        <ol class="ai-steps" role="list">
+          {aiSteps.map(([number, title, text]) => <li data-reveal><span>{number}</span><h3>{title}</h3><p>{text}</p></li>)}
+        </ol>
+        <div class="ai-footer" data-reveal>
+          <ul class="ai-tools" role="list" aria-label={es ? 'Herramientas de IA' : 'AI tools'}>{aiTools.map(tool => <li>{tool}</li>)}</ul>
+          <p class="ai-proof"><span aria-hidden="true"></span>{es ? 'Este sitio se construyó con Claude Code y Codex, incluida su QA.' : 'This site was built with Claude Code and Codex, QA included.'}</p>
+        </div>
+      </section>
+
       <section id="about" class="about" data-motion-section aria-labelledby="about-title">
         <div class="about-orbits" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div><div class="section-kicker">04 / {copy.nav[1]}</div><h2 id="about-title" data-reveal>{copy.about}</h2></div>
+        <div><div class="section-kicker">05 / {copy.nav[1]}</div><h2 id="about-title" data-reveal>{copy.about}</h2></div>
         <div class="about-details" data-reveal>
           <p>{es ? 'Soy Daniel De Ruvo, Senior Frontend Engineer. Construyo interfaces rápidas y accesibles en React, Next.js y TypeScript, y bajo en el stack a APIs en Node.js e integraciones de IA cuando el producto lo necesita.' : 'I’m Daniel De Ruvo, a Senior Frontend Engineer. I build fast, accessible interfaces in React, Next.js and TypeScript, and I go down the stack to Node.js APIs and AI integrations when a product needs it.'}</p>
           <p>{es ? 'En Making Sense lidero un equipo de desarrollo de 15 personas para clientes internacionales, incluidos Sony y Attentive. Mi base en UX hace que lo que construyo no solo funcione: también se entienda y se use bien.' : 'At Making Sense, I lead a 15-person development team for international clients, including Sony and Attentive. My UX background means what I ship doesn’t just work: it’s clear and easy to use.'}</p>
@@ -142,7 +168,7 @@ const capabilities = es ? [
       </section>
 
       <section class="experience" data-motion-section aria-labelledby="experience-title">
-        <div class="section-kicker">05 / {copy.experience}</div>
+        <div class="section-kicker">06 / {copy.experience}</div>
         <h2 id="experience-title" data-reveal>{es ? 'De la dirección técnica al detalle.' : 'From technical direction to the details.'}</h2>
         <div class="experience-list">
           <div data-reveal><span>2022 — {es ? 'Actualidad' : 'Present'}</span><strong>Making Sense</strong><p>Senior Frontend Developer / Tech Lead · UX Development</p></div>
@@ -153,7 +179,7 @@ const capabilities = es ? [
 
       <section id="contact" class="contact-panel" data-motion-section aria-labelledby="contact-title">
         <span class="contact-arrow" aria-hidden="true">↗</span>
-        <div class="section-kicker">06 / {copy.nav[2]}</div>
+        <div class="section-kicker">07 / {copy.nav[2]}</div>
         <p class="availability"><span aria-hidden="true"></span>{copy.available}</p>
         <h2 id="contact-title" data-reveal>{es ? 'Hagamos algo que importe.' : 'Let’s make something matter.'}</h2>
         <div class="contact-actions"><a href="mailto:deruvodaniel@gmail.com">{copy.contact} ↗</a><a href="https://www.linkedin.com/in/deruvodaniel/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="/De_Ruvo_Daniel_Resume_2026.pdf" download>{copy.resume} ↓</a></div>
