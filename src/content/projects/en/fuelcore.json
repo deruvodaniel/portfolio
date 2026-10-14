@@ -3,5 +3,5 @@
   "year": null, "role": null, "stack": ["Next.js", "Firebase", "Gemini API"],
   "summary": "A nutrition and training product with onboarding, personalized meal plans, AI-assisted recipes, progress tracking and server API routes.",
   "challenge": null, "process": [], "decisions": [], "outcomes": [],
-  "links": { "demo": null, "code": null }, "media": [], "caseStudyReady": false, "order": 2
+  "links": { "demo": "https://v0-nutri-plan.vercel.app", "code": null }, "media": [], "caseStudyReady": false, "order": 2
 }

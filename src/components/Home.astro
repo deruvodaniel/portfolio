@@ -14,11 +14,11 @@ const copy = es ? {
   nav: ['Proyectos', 'Perfil', 'Contacto'],
   hero: 'PARA UNA WEB MÁS HUMANA',
   statement: ['Precisión de ingeniería.', 'Ojo entrenado para la UX.'],
-  role: 'Senior Frontend Engineer: interfaces con IA en React, Next.js y TypeScript.',
+  role: 'Senior Frontend Engineer con mirada de producto: interfaces con IA en React, Next.js y TypeScript.',
   view: 'Ver proyectos', scroll: 'Deslizá para explorar',
   work: 'Proyectos destacados', from: 'De la idea', to: 'al producto.',
   capabilities: 'Lo que construyo', capabilitiesTitle: 'Interfaces rápidas, accesibles y listas para IA.',
-  about: 'Ingeniero primero. Con criterio de UX en cada interfaz.',
+  about: 'Ingeniero primero. Con producto y UX en cada decisión.',
   experience: 'Experiencia',
   contact: 'Hablemos', available: 'Disponible para trabajo remoto',
   resume: 'Descargar CV', note: 'Hecho con Astro, Claude Code y Codex · 2026',
@@ -27,11 +27,11 @@ const copy = es ? {
   nav: ['Work', 'About', 'Contact'],
   hero: 'FOR A MORE HUMAN WEB',
   statement: ['Engineering precision.', 'A trained eye for UX.'],
-  role: 'Senior Frontend Engineer building AI-powered interfaces with React, Next.js and TypeScript.',
+  role: 'Product-minded Senior Frontend Engineer building AI-powered interfaces with React, Next.js and TypeScript.',
   view: 'View work', scroll: 'Scroll to explore',
   work: 'Selected work', from: 'From idea', to: 'to product.',
   capabilities: 'What I build', capabilitiesTitle: 'Interfaces that are fast, accessible and AI-ready.',
-  about: 'Engineer first. With a UX mindset in every interface.',
+  about: 'Engineer first. With product and UX in every decision.',
   experience: 'Experience',
   contact: 'Let’s talk', available: 'Available for remote work',
   resume: 'Download résumé', note: 'Built with Astro, Claude Code & Codex · 2026',
@@ -43,15 +43,15 @@ const clients = [
   'MM411', 'CPI Group', 'Albor',
 ];
 const capabilities = es ? [
-  ['01', 'Arquitectura frontend', 'React, Next.js y TypeScript a escala: micro-frontends, rendimiento y SEO.'],
+  ['01', 'Arquitectura frontend', 'React, Next.js y TypeScript a escala: micro-frontends, rendimiento, SEO y APIs en Node.js cuando el producto lo necesita.'],
   ['02', 'Ingeniería de interfaces', 'Design systems, componentes accesibles (WCAG 2.1 AA), motion y dashboards con muchos datos.'],
   ['03', 'Interfaces con IA', 'Funcionalidades con LLMs, generación de imágenes y agentes (OpenAI, Gemini, Claude), convertidas en experiencias claras.'],
-  ['04', 'Fullstack y entrega', 'APIs en Node.js y Express cuando el producto lo necesita; CI/CD, testing E2E y liderazgo técnico.'],
+  ['04', 'Mirada de producto', 'Discovery, priorización del backlog y definición de MVPs junto a líderes de producto y stakeholders. Con formación de Product Owner: mido el trabajo por resultados, no por tickets.'],
 ] : [
-  ['01', 'Frontend architecture', 'React, Next.js and TypeScript at scale: micro-frontends, performance and SEO.'],
+  ['01', 'Frontend architecture', 'React, Next.js and TypeScript at scale: micro-frontends, performance, SEO and Node.js APIs when the product needs them.'],
   ['02', 'Interface engineering', 'Design systems, accessible components (WCAG 2.1 AA), motion and data-heavy dashboards.'],
   ['03', 'AI-powered interfaces', 'LLM features, image generation and agents (OpenAI, Gemini, Claude) turned into clear user experiences.'],
-  ['04', 'Fullstack & delivery', 'Node.js and Express APIs when the product needs them; CI/CD, E2E testing and technical leadership.'],
+  ['04', 'Product mindset', 'Discovery, backlog prioritization and MVP scoping with product leads and stakeholders. Product Owner trained: I measure work by outcomes, not tickets.'],
 ];
 const aiSteps = es ? [
   ['01', 'Explorar', 'Uso Claude y Codex para recorrer codebases, comparar enfoques y bajar specs antes de escribir código.'],
@@ -76,14 +76,14 @@ const aiTools = ['Claude Code', 'Codex', 'Claude API', 'MCP', 'Agents & skills',
         <a href="#about">{copy.nav[1]}</a>
         <a href="#contact">{copy.nav[2]}</a>
       </nav>
-      <p class="header-role">Frontend · Interfaces · AI</p>
+      <p class="header-role">Frontend · Product · AI</p>
       <a class="language-link" href={`/${other}/`} data-language={other} lang={other} aria-label={es ? 'Switch to English' : 'Cambiar a español'}>{other.toUpperCase()}</a>
       <button class="menu" type="button" aria-label={es ? 'Abrir navegación' : 'Open navigation'} aria-expanded="false"><i></i><i></i></button>
     </header>
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-frame">
-          <div class="hero-meta"><span class="meta-index">01</span><span>Interfaces<br />Systems<br />AI</span></div>
+          <div class="hero-meta"><span class="meta-index">01</span><span>Interfaces<br />Product<br />AI</span></div>
           <div class="hero-copy">
             <h1 id="hero-title"><span class="build">BUILD</span><span class="human">{copy.hero}</span></h1>
             <p class="statement">{copy.statement[0]}<br />{copy.statement[1]}</p>
@@ -114,7 +114,7 @@ const aiTools = ['Claude Code', 'Codex', 'Claude API', 'MCP', 'Agents & skills',
         </div>
       </section>
 
-      <div class="kinetic-band" aria-hidden="true" data-motion-section><div class="kinetic-track">{[0, 1].map(() => <span>FRONTEND <i>×</i> INTERFACES <i>×</i> AI PRODUCTS <i>×</i> </span>)}</div></div>
+      <div class="kinetic-band" aria-hidden="true" data-motion-section><div class="kinetic-track">{[0, 1].map(() => <span>FRONTEND <i>×</i> PRODUCT <i>×</i> AI <i>×</i> </span>)}</div></div>
 
       <section id="selected-work" class="selected-work" data-motion-section aria-labelledby="work-title">
         <div class="section-kicker">02 / {copy.work}</div>
@@ -163,7 +163,7 @@ const aiTools = ['Claude Code', 'Codex', 'Claude API', 'MCP', 'Agents & skills',
         <div><div class="section-kicker">05 / {copy.nav[1]}</div><h2 id="about-title" data-reveal>{copy.about}</h2></div>
         <div class="about-details" data-reveal>
           <p>{es ? 'Soy Daniel De Ruvo, Senior Frontend Engineer. Construyo interfaces rápidas y accesibles en React, Next.js y TypeScript, y bajo en el stack a APIs en Node.js e integraciones de IA cuando el producto lo necesita.' : 'I’m Daniel De Ruvo, a Senior Frontend Engineer. I build fast, accessible interfaces in React, Next.js and TypeScript, and I go down the stack to Node.js APIs and AI integrations when a product needs it.'}</p>
-          <p>{es ? 'En Making Sense lidero un equipo de desarrollo de 15 personas para clientes internacionales, incluidos Sony y Attentive. Mi base en UX hace que lo que construyo no solo funcione: también se entienda y se use bien.' : 'At Making Sense, I lead a 15-person development team for international clients, including Sony and Attentive. My UX background means what I ship doesn’t just work: it’s clear and easy to use.'}</p>
+          <p>{es ? 'En Making Sense lidero un equipo de desarrollo de 15 personas para clientes internacionales, incluidos Sony y Attentive. Trabajo pegado a producto: hago discovery, priorizo el backlog con stakeholders y defino MVPs que salen a producción. Mi base en UX hace que lo que construyo no solo funcione: también se entienda y se use bien.' : 'At Making Sense, I lead a 15-person development team for international clients, including Sony and Attentive. I work close to product: running discovery, prioritizing the backlog with stakeholders and scoping MVPs that actually ship. My UX background means what I ship doesn’t just work: it’s clear and easy to use.'}</p>
         </div>
       </section>
 
