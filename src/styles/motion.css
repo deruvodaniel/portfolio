@@ -280,3 +280,18 @@ footer small,.case-meta span,.scene-label,.hero-bottom { color:#666; }
   .ai-steps li:nth-child(n+3) { border-top:0; }
   .ai-steps p { margin-top:14px; max-width:none; }
 }
+
+/* Six navigation items: drop the role tag earlier and switch to the menu on tablets. */
+.proof strong { position:relative; }
+.proof-prefix { position:absolute; left:0; top:-24px; font-family:var(--sans); font-size:12px; letter-spacing:.11em; text-transform:uppercase; line-height:1; color:var(--ink); white-space:nowrap; }
+@media (max-width:1360px) {
+  .header-role { display:none; }
+  .header nav { margin-left:auto; gap:28px; }
+}
+@media (min-width:701px) and (max-width:1050px) {
+  .header nav { display:none; position:absolute; top:78px; left:0; right:0; flex-direction:column; gap:22px; margin:0; padding:25px clamp(22px,4vw,68px); background:var(--paper); border-bottom:1px solid var(--line); }
+  .header nav.open { display:flex; }
+  .language-link { margin-left:auto; }
+  .menu { display:flex; margin-left:0; }
+}
+.proof span { max-width:230px; }

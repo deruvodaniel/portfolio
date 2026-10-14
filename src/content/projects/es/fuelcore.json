@@ -1,7 +1,7 @@
 {
   "slug": "fuelcore", "locale": "es", "title": "Fuelcore", "tagline": "Nutrición personalizada con IA generativa.",
   "year": null, "role": null, "stack": ["Next.js", "Firebase", "Gemini API"],
-  "summary": "Producto de nutrición y entrenamiento con ingreso guiado, planes de comidas personalizados, recetas asistidas por IA, seguimiento del progreso y rutas API de servidor.",
+  "summary": "Producto de nutrición y entrenamiento con onboarding guiado, planes de comidas personalizados, recetas asistidas por IA, seguimiento del progreso y rutas API de servidor.",
   "challenge": null, "process": [], "decisions": [], "outcomes": [],
   "links": { "demo": "https://v0-nutri-plan.vercel.app", "code": null }, "media": [], "caseStudyReady": false, "order": 2
 }
