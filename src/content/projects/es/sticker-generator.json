@@ -1,9 +1,9 @@
 {
   "slug": "sticker-generator", "locale": "es", "title": "AI Sticker Generator", "tagline": "Un recuerdo físico, generado con IA.",
-  "year": null, "role": "Diseño de producto y desarrollo fullstack", "stack": ["React", "Express", "OpenAI Images", "Supabase", "n8n"],
+  "year": null, "role": "Desarrollo fullstack", "stack": ["React", "Express", "OpenAI Images", "Supabase", "n8n"],
   "summary": "Un creador interactivo de stickers que combina generación de imágenes y edición de selfies con una experiencia guiada en React.",
   "challenge": "Convertir un flujo de generación de imágenes en una experiencia de producto clara y usable.",
-  "process": ["Diseñé el recorrido guiado y los estados de respuesta visual.", "Conecté la interfaz React con una API en Express, generación de imágenes, almacenamiento en Supabase y flujos en n8n."],
+  "process": ["Construí el recorrido guiado y sus estados de carga, error y resultado en React.", "Desarrollé una API en Node.js/Express que resuelve la generación y edición de imágenes con OpenAI, el almacenamiento en Supabase y los webhooks de n8n."],
   "decisions": ["Mantuve el proceso de creación visible y paso a paso para explicar lo que hace la IA.", "Separé la generación y el almacenamiento detrás de una API de servidor."],
   "outcomes": ["Hay una demo pública funcional."],
   "links": { "demo": "https://sticker-generator-tan.vercel.app", "code": "https://github.com/deruvodaniel/sticker-generator" },

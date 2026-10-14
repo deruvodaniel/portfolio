@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/motion.css';
 
 interface Props {
   lang: 'en' | 'es';
@@ -16,7 +17,8 @@ const jsonLd = {
   name: 'Daniel De Ruvo',
   url: 'https://portfolio-daniel-de-ruvo.vercel.app',
   sameAs: ['https://www.linkedin.com/in/deruvodaniel/', 'https://github.com/deruvodaniel'],
-  jobTitle: 'Senior Frontend & Design Engineer',
+  jobTitle: 'Senior Frontend Engineer',
+  knowsAbout: ['React', 'Next.js', 'TypeScript', 'Design systems', 'Web accessibility', 'Node.js', 'Generative AI'],
 };
 ---
 <!doctype html>
@@ -43,21 +45,29 @@ const jsonLd = {
   <body>
     <a class="skip" href="#main">{lang === 'en' ? 'Skip to content' : 'Saltar al contenido'}</a>
     <slot />
+    <script is:inline src="/motion.js" defer></script>
     <script>
       const menu = document.querySelector<HTMLButtonElement>('.menu');
       const nav = document.querySelector<HTMLElement>('.header nav');
       menu?.addEventListener('click', () => {
         const open = menu.getAttribute('aria-expanded') === 'true';
         menu.setAttribute('aria-expanded', String(!open));
-        menu.setAttribute('aria-label', open ? 'Open navigation' : 'Close navigation');
+        menu.setAttribute('aria-label', document.documentElement.lang === 'es' ? (open ? 'Abrir navegación' : 'Cerrar navegación') : (open ? 'Open navigation' : 'Close navigation'));
         nav?.classList.toggle('open', !open);
       });
       nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
         menu?.setAttribute('aria-expanded', 'false');
+        menu?.setAttribute('aria-label', document.documentElement.lang === 'es' ? 'Abrir navegación' : 'Open navigation');
         nav.classList.remove('open');
       }));
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menu?.getAttribute('aria-expanded') === 'true') {
+          menu.click();
+          menu.focus();
+        }
+      });
       document.querySelectorAll<HTMLAnchorElement>('[data-language]').forEach(link => {
-        link.addEventListener('click', () => localStorage.setItem('ddra-language', link.dataset.language || 'en'));
+        link.addEventListener('click', () => { try { localStorage.setItem('ddra-language', link.dataset.language || 'en'); } catch {} });
       });
     </script>
   </body>

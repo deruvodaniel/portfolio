@@ -5,7 +5,7 @@ export default function KineticCanvas() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const scene = canvas?.parentElement;
+    const scene = canvas?.closest<HTMLElement>('.type-scene');
     const hero = scene?.closest('.hero') as HTMLElement | null;
     const frame = scene?.closest('.hero-frame') as HTMLElement | null;
     if (!canvas || !scene || !hero || !frame) return;
@@ -23,6 +23,11 @@ export default function KineticCanvas() {
     let smooth = { x: .5, y: .5 };
     let trail: { x: number; y: number; alpha: number }[] = [];
     let frameId = 0;
+    let visible = true;
+    let paused = document.documentElement.dataset.motion === 'off';
+    let time = 0;
+    const reduced = () => motion.matches || paused;
+    const running = () => !reduced() && visible && !document.hidden;
 
     function resize() {
       if (!canvas || !ctx) return;
@@ -31,14 +36,14 @@ export default function KineticCanvas() {
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(rect.height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (motion.matches) draw();
+      if (!running()) draw();
     }
     function scroll() {
       if (!hero || !frame) return;
       const extent = Math.max(hero.offsetHeight - innerHeight, 1);
       const progress = Math.max(0, Math.min(1, (scrollY - hero.offsetTop) / extent));
       frame.style.setProperty('--scroll', progress.toFixed(3));
-      if (motion.matches) draw();
+      if (!running()) draw();
     }
     function draw() {
       if (!canvas || !ctx || !scene) return;
@@ -46,17 +51,18 @@ export default function KineticCanvas() {
       const h = canvas.clientHeight;
       if (!w || !h) return;
       ctx.clearRect(0, 0, w, h);
-      if (!motion.matches) {
+      if (!reduced()) {
         smooth.x += (pointer.x - smooth.x) * .07;
         smooth.y += (pointer.y - smooth.y) * .07;
         (scene as HTMLElement).style.setProperty('--mx', ((smooth.x - .5) * 2).toFixed(3));
         (scene as HTMLElement).style.setProperty('--my', ((smooth.y - .5) * 2).toFixed(3));
       }
+      time += running() ? .008 : 0;
       const shiftX = (smooth.x - .5) * 48;
       const shiftY = (smooth.y - .5) * 33;
       const points = nodes.map((node, index) => ({
-        x: node.x * w + shiftX * (index % 3 + 1) / 3,
-        y: node.y * h + shiftY * (index % 4 + 1) / 4,
+        x: node.x * w + shiftX * (index % 3 + 1) / 3 + (reduced() ? 0 : Math.sin(time + index) * 8),
+        y: node.y * h + shiftY * (index % 4 + 1) / 4 + (reduced() ? 0 : Math.cos(time + index * .7) * 8),
         red: node.red,
       }));
       points.forEach((node, index) => {
@@ -76,7 +82,7 @@ export default function KineticCanvas() {
           ctx.strokeRect(node.x - 6, node.y - 6, 12, 12);
         }
       });
-      if (!motion.matches && pointer.active) {
+      if (!reduced() && pointer.active) {
         trail.push({ x: smooth.x * w, y: smooth.y * h, alpha: .7 });
         if (trail.length > 22) trail.shift();
       }
@@ -88,10 +94,10 @@ export default function KineticCanvas() {
         point.alpha *= .93;
       });
       trail = trail.filter((point) => point.alpha > .04);
-      if (!motion.matches) frameId = requestAnimationFrame(draw);
+      if (running()) frameId = requestAnimationFrame(draw);
     }
     function move(event: PointerEvent) {
-      if (!scene || motion.matches || event.pointerType === 'touch') return;
+      if (!scene || reduced() || event.pointerType === 'touch') return;
       const rect = scene.getBoundingClientRect();
       pointer = {
         x: Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)),
@@ -100,7 +106,16 @@ export default function KineticCanvas() {
       };
     }
     function leave() { pointer.active = false; pointer.x = .5; pointer.y = .5; }
-    function change() { cancelAnimationFrame(frameId); resize(); if (!motion.matches) draw(); }
+    function change() { cancelAnimationFrame(frameId); draw(); }
+    function onMotion(event: Event) {
+      paused = (event as CustomEvent<{ paused: boolean }>).detail.paused;
+      if (paused) { smooth = { x: .5, y: .5 }; trail = []; }
+      change();
+    }
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; change(); });
+    observer.observe(hero);
+    document.addEventListener('ddra:motion', onMotion);
+    document.addEventListener('visibilitychange', change);
     hero.addEventListener('pointermove', move);
     hero.addEventListener('pointerleave', leave);
     addEventListener('resize', resize, { passive: true });
@@ -109,6 +124,9 @@ export default function KineticCanvas() {
     resize(); scroll(); draw();
     return () => {
       cancelAnimationFrame(frameId);
+      observer.disconnect();
+      document.removeEventListener('ddra:motion', onMotion);
+      document.removeEventListener('visibilitychange', change);
       hero.removeEventListener('pointermove', move);
       hero.removeEventListener('pointerleave', leave);
       removeEventListener('resize', resize);

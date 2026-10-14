@@ -1,0 +1,22 @@
+---
+interface Props { kind: string; index: number }
+const { kind, index } = Astro.props;
+---
+<div class={`project-art art-${index}`} aria-hidden="true">
+  <div class="art-grid"></div>
+  <span class="art-caption">DDRA / SELECTED WORK — 0{index + 1}</span>
+  <div class="art-object">
+    {kind === 'sticker-generator' ? <>
+      <span class="sticker sticker-back">IMAGINE</span>
+      <span class="sticker sticker-front"><b>✳</b><span>MAKE IT<br />YOUR OWN.</span></span>
+      <span class="sticker-star">✳</span>
+    </> : kind === 'fuelcore' ? <>
+      <div class="fuel-ring ring-one"></div><div class="fuel-ring ring-two"></div><div class="fuel-ring ring-three"></div>
+      <span class="fuel-letter">F<span>↗</span></span><span class="fuel-label">FUEL YOUR POTENTIAL.</span>
+    </> : <>
+      <span class="lavenius-orbit orbit-one"></span><span class="lavenius-orbit orbit-two"></span><span class="lavenius-orbit orbit-three"></span>
+      <span class="lavenius-letter">L<span>+</span></span><span class="lavenius-label">CARE, CONNECTED.</span>
+    </>}
+  </div>
+  <span class="art-cross">+</span>
+</div>
