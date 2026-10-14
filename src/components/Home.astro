@@ -1,0 +1,140 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import KineticCanvas from './KineticCanvas';
+
+interface Props { lang: 'en' | 'es' }
+const { lang } = Astro.props;
+const es = lang === 'es';
+const other = es ? 'en' : 'es';
+const projects = (await getCollection('projects', ({ data }) => data.locale === lang)).sort((a, b) => a.data.order - b.data.order);
+const projectUrl = (slug: string) => es ? `/es/trabajos/${slug}/` : `/en/work/${slug}/`;
+const copy = es ? {
+  nav: ['Proyectos', 'Perfil', 'Contacto'],
+  hero: 'PARA UNA WEB MÁS HUMANA',
+  statement: ['Intuición de diseño.', 'Precisión de ingeniería.'],
+  role: 'Senior Frontend & Design Engineer que construye productos fullstack con IA.',
+  view: 'Ver proyectos', scroll: 'Deslizá para explorar',
+  work: 'Proyectos destacados', from: 'De la idea', to: 'al producto.',
+  capabilities: 'Lo que conecto', capabilitiesTitle: 'Diseño, código y sistemas que funcionan juntos.',
+  about: 'Diseñador de formación. Ingeniero en toda la experiencia de producto.',
+  experience: 'Experiencia',
+  contact: 'Hablemos', available: 'Disponible para trabajo remoto',
+  resume: 'Descargar CV', note: 'Sitio en desarrollo · 2026',
+  details: 'Ver caso', source: 'Código', live: 'Demo', preparing: 'Caso en preparación',
+} : {
+  nav: ['Work', 'About', 'Contact'],
+  hero: 'FOR A MORE HUMAN WEB',
+  statement: ['Design intuition.', 'Engineering precision.'],
+  role: 'Senior Frontend & Design Engineer building fullstack AI products.',
+  view: 'View work', scroll: 'Scroll to explore',
+  work: 'Selected work', from: 'From idea', to: 'to product.',
+  capabilities: 'What I connect', capabilitiesTitle: 'Design, code and systems working together.',
+  about: 'Designer by training. Engineer across the product experience.',
+  experience: 'Experience',
+  contact: 'Let’s talk', available: 'Available for remote work',
+  resume: 'Download résumé', note: 'Site in progress · 2026',
+  details: 'Read case', source: 'Code', live: 'Live demo', preparing: 'Case in preparation',
+};
+const capabilities = es ? [
+  ['01', 'Productos con IA', 'De la experiencia de usuario a las APIs de generación y automatización.'],
+  ['02', 'Frontend y sistemas de diseño', 'React, Next.js, accesibilidad, rendimiento y consistencia visual.'],
+  ['03', 'Ingeniería fullstack', 'APIs en Express, Supabase, GraphQL, integración de datos y flujos de producto.'],
+  ['04', 'Entrega y liderazgo', 'CI/CD, observabilidad, arquitectura, mentoring y dirección técnica.'],
+] : [
+  ['01', 'AI product development', 'From user experience to generation APIs and automation workflows.'],
+  ['02', 'Frontend & design systems', 'React, Next.js, accessibility, performance and visual consistency.'],
+  ['03', 'Fullstack engineering', 'Express APIs, Supabase, GraphQL, data integration and product flows.'],
+  ['04', 'Delivery & leadership', 'CI/CD, observability, architecture, mentoring and technical direction.'],
+];
+---
+<BaseLayout lang={lang} title="Daniel De Ruvo · Frontend, Design & Fullstack" description={es ? 'Daniel De Ruvo: ingeniería frontend, diseño y desarrollo fullstack para productos con IA.' : 'Daniel De Ruvo: frontend engineering, design and fullstack product development with AI.'} alternate={`/${other}/`}>
+  <div class="site-shell">
+    <header class="header">
+      <a class="wordmark" href={`/${lang}/`} aria-label="ddra home">ddra<span aria-hidden="true"></span></a>
+      <nav aria-label={es ? 'Navegación principal' : 'Main navigation'}>
+        <a href="#selected-work">{copy.nav[0]}</a>
+        <a href="#about">{copy.nav[1]}</a>
+        <a href="#contact">{copy.nav[2]}</a>
+      </nav>
+      <p class="header-role">Frontend · Design · Fullstack · AI</p>
+      <a class="language-link" href={`/${other}/`} data-language={other} lang={other} aria-label={es ? 'Switch to English' : 'Cambiar a español'}>{other.toUpperCase()}</a>
+      <button class="menu" type="button" aria-label={es ? 'Abrir navegación' : 'Open navigation'} aria-expanded="false"><i></i><i></i></button>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-frame">
+          <div class="hero-meta"><span class="meta-index">01</span><span>Ideas<br />Interfaces<br />Impact</span></div>
+          <div class="hero-copy">
+            <h1 id="hero-title"><span class="build">BUILD</span><span class="human">{copy.hero}</span></h1>
+            <p class="statement">{copy.statement[0]}<br />{copy.statement[1]}</p>
+            <p class="role">{copy.role}</p>
+            <a class="primary-cta" href="#selected-work"><span>{copy.view}</span><span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="type-scene" aria-hidden="true">
+            <KineticCanvas client:load />
+            <span class="scene-glyph glyph-b">B</span><span class="scene-glyph glyph-u">U</span><span class="scene-glyph glyph-i">I</span><span class="scene-glyph glyph-l">L</span><span class="scene-glyph glyph-d">D</span>
+            <span class="scene-label label-a">TYPE<br />REACTS<br />TO YOU</span>
+            <span class="scene-label label-b">DDRA / 2026</span>
+          </div>
+          <div class="hero-bottom"><span>Digital experiences<br />at the intersection of people and technology.</span><span class="scroll-cue">{copy.scroll} <b>↓</b></span></div>
+          <div class="hero-progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        </div>
+      </section>
+
+      <section id="selected-work" class="selected-work" aria-labelledby="work-title">
+        <div class="section-kicker">02 / {copy.work}</div>
+        <h2 id="work-title">{copy.from}<br /><em>{copy.to}</em></h2>
+        <div class="work-list">
+          {projects.map(({ data }, index) => (
+            <article class="project-row">
+              <span class="project-number">0{index + 1}</span>
+              <div class="project-main"><h3>{data.title}</h3><p>{data.tagline}</p></div>
+              <span class="project-type">{data.stack.slice(0, 3).join(' / ') || copy.preparing}</span>
+              {data.caseStudyReady ? <a class="project-action" href={projectUrl(data.slug)} aria-label={`${copy.details}: ${data.title}`}>↗</a> : data.links.demo ? <a class="project-action" href={data.links.demo} target="_blank" rel="noreferrer" aria-label={`${copy.live}: ${data.title}`}>↗</a> : <span class="project-pending" title={copy.preparing}>·</span>}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="proof" aria-label={es ? 'En números' : 'By the numbers'}>
+        <div><strong>6+</strong><span>{es ? 'años construyendo productos digitales' : 'years building digital products'}</span></div>
+        <div><strong>15</strong><span>{es ? 'personas en el equipo liderado' : 'people on the team I led'}</span></div>
+        <div><strong>10+</strong><span>{es ? 'clientes internacionales' : 'international clients'}</span></div>
+        <div><strong>40%</strong><span>{es ? 'menos tiempo de entrega de MVP, hasta' : 'faster MVP delivery, up to'}</span></div>
+      </section>
+
+      <section class="capabilities" aria-labelledby="capabilities-title">
+        <div class="section-kicker">03 / {copy.capabilities}</div>
+        <h2 id="capabilities-title">{copy.capabilitiesTitle}</h2>
+        <div class="capability-grid">{capabilities.map(([number, title, text]) => <article><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+      </section>
+
+      <section id="about" class="about" aria-labelledby="about-title">
+        <div><div class="section-kicker">04 / {copy.nav[1]}</div><h2 id="about-title">{copy.about}</h2></div>
+        <div class="about-details">
+          <p>{es ? 'Soy Daniel De Ruvo, Senior Frontend & Design Engineer. Lidero equipos y construyo interfaces, APIs e integraciones para llevar productos de la idea a producción.' : 'I’m Daniel De Ruvo, a Senior Frontend & Design Engineer. I lead teams and build interfaces, APIs and integrations to take products from idea to production.'}</p>
+          <p>{es ? 'En Making Sense lidero un equipo de UX Development de 15 personas para clientes internacionales, incluidos Sony y Attentive. Combino criterio visual con arquitectura frontend, datos y entrega continua.' : 'At Making Sense, I lead a 15-person UX Development team for international clients, including Sony and Attentive. I combine visual judgment with frontend architecture, data and continuous delivery.'}</p>
+        </div>
+      </section>
+
+      <section class="experience" aria-labelledby="experience-title">
+        <div class="section-kicker">05 / {copy.experience}</div>
+        <h2 id="experience-title">{es ? 'De la dirección técnica al detalle.' : 'From technical direction to the details.'}</h2>
+        <div class="experience-list">
+          <div><span>2022 — {es ? 'Actualidad' : 'Present'}</span><strong>Making Sense</strong><p>Senior Frontend Developer / Tech Lead · UX Development</p></div>
+          <div><span>2023 — 2024</span><strong>Coderhouse</strong><p>{es ? 'Profesor de Desarrollo Web' : 'Web Development Professor'}</p></div>
+          <div><span>2020 — 2022</span><strong>Garaje de Ideas / Vidoomy</strong><p>Frontend Developer</p></div>
+        </div>
+      </section>
+
+      <section class="contact-panel" aria-labelledby="contact-title">
+        <div class="section-kicker">06 / {copy.nav[2]}</div>
+        <p class="availability"><span aria-hidden="true"></span>{copy.available}</p>
+        <h2 id="contact-title">{es ? 'Hagamos algo que importe.' : 'Let’s make something matter.'}</h2>
+        <div class="contact-actions"><a href="mailto:deruvodaniel@gmail.com">{copy.contact} ↗</a><a href="https://www.linkedin.com/in/deruvodaniel/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="/De_Ruvo_Daniel_Resume_2026.pdf" download>{copy.resume} ↓</a></div>
+      </section>
+    </main>
+    <footer id="contact"><span class="wordmark" aria-label="ddra">ddra<span aria-hidden="true"></span></span><span>Daniel De Ruvo</span><a href="https://github.com/deruvodaniel" target="_blank" rel="noreferrer">GitHub ↗</a><small>{copy.note}</small></footer>
+  </div>
+</BaseLayout>

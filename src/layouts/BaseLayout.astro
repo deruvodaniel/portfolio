@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  lang: 'en' | 'es';
+  title: string;
+  description: string;
+  alternate: string;
+}
+const { lang, title, description, alternate } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const otherLang = lang === 'en' ? 'es' : 'en';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Daniel De Ruvo',
+  url: 'https://portfolio-daniel-de-ruvo.vercel.app',
+  sameAs: ['https://www.linkedin.com/in/deruvodaniel/', 'https://github.com/deruvodaniel'],
+  jobTitle: 'Senior Frontend & Design Engineer',
+};
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8f7f4" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.toString()} />
+    <link rel="alternate" hreflang={otherLang} href={new URL(alternate, Astro.site).toString()} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.toString()} />
+    <meta property="og:image" content={new URL('/og-ddra.png', Astro.site).toString()} />
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{lang === 'en' ? 'Skip to content' : 'Saltar al contenido'}</a>
+    <slot />
+    <script>
+      const menu = document.querySelector<HTMLButtonElement>('.menu');
+      const nav = document.querySelector<HTMLElement>('.header nav');
+      menu?.addEventListener('click', () => {
+        const open = menu.getAttribute('aria-expanded') === 'true';
+        menu.setAttribute('aria-expanded', String(!open));
+        menu.setAttribute('aria-label', open ? 'Open navigation' : 'Close navigation');
+        nav?.classList.toggle('open', !open);
+      });
+      nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+        menu?.setAttribute('aria-expanded', 'false');
+        nav.classList.remove('open');
+      }));
+      document.querySelectorAll<HTMLAnchorElement>('[data-language]').forEach(link => {
+        link.addEventListener('click', () => localStorage.setItem('ddra-language', link.dataset.language || 'en'));
+      });
+    </script>
+  </body>
+</html>

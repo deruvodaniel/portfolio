@@ -1,0 +1,11 @@
+{
+  "slug": "sticker-generator", "locale": "en", "title": "AI Sticker Generator", "tagline": "A physical keepsake, generated with AI.",
+  "year": null, "role": "Product design and fullstack development", "stack": ["React", "Express", "OpenAI Images", "Supabase", "n8n"],
+  "summary": "An interactive sticker creator combining image generation and selfie editing with a guided React experience.",
+  "challenge": "Turn a generative image workflow into a clear, usable product experience.",
+  "process": ["Designed the guided creation flow and visual feedback states.", "Connected the React interface to an Express API, image generation, Supabase storage and n8n workflows."],
+  "decisions": ["Kept the creation flow visible and step by step so users understand what the AI is doing.", "Separated image generation and storage behind a server API."],
+  "outcomes": ["A working public demo is available."],
+  "links": { "demo": "https://sticker-generator-tan.vercel.app", "code": "https://github.com/deruvodaniel/sticker-generator" },
+  "media": [], "caseStudyReady": true, "order": 1
+}

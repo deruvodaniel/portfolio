@@ -1,0 +1,6 @@
+{
+  "slug": "lavenius", "locale": "es", "title": "Lavenius", "tagline": "Una interfaz para gestión médica.",
+  "year": null, "role": null, "stack": ["React", "TypeScript", "Vite", "Clerk", "FullCalendar"], "summary": "Plataforma de gestión médica con agenda y flujos de cuenta. Estamos preparando el relato del caso y el alcance exacto del trabajo de Daniel.",
+  "challenge": null, "process": [], "decisions": [], "outcomes": [],
+  "links": { "demo": "https://lavenius-fe.vercel.app", "code": "https://github.com/deruvodaniel/lavenius-fe" }, "media": [], "caseStudyReady": false, "order": 3
+}

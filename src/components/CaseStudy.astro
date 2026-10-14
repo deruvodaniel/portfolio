@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props { project: CollectionEntry<'projects'> }
+const { project } = Astro.props;
+const { data } = project;
+const es = data.locale === 'es';
+const other = es ? 'en' : 'es';
+const alternate = es ? `/en/work/${data.slug}/` : `/es/trabajos/${data.slug}/`;
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'CreativeWork',
+  name: data.title, description: data.summary,
+  creator: { '@type': 'Person', name: 'Daniel De Ruvo' },
+  url: new URL(Astro.url.pathname, Astro.site).toString(),
+};
+---
+<BaseLayout lang={data.locale} title={`${data.title} · Daniel De Ruvo`} description={data.summary} alternate={alternate}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <div class="site-shell case-shell">
+    <header class="header case-header">
+      <a class="wordmark" href={`/${data.locale}/`} aria-label="ddra home">ddra<span aria-hidden="true"></span></a>
+      <nav aria-label={es ? 'Navegación principal' : 'Main navigation'}><a href={`/${data.locale}/#selected-work`}>{es ? 'Proyectos' : 'Work'}</a><a href={`/${data.locale}/#about`}>{es ? 'Perfil' : 'About'}</a><a href={`/${data.locale}/#contact`}>{es ? 'Contacto' : 'Contact'}</a></nav>
+      <p class="header-role">Frontend · Design · Fullstack · AI</p>
+      <a class="language-link" href={alternate} data-language={other} lang={other}>{other.toUpperCase()}</a>
+      <button class="menu" type="button" aria-label={es ? 'Abrir navegación' : 'Open navigation'} aria-expanded="false"><i></i><i></i></button>
+    </header>
+    <main id="main" class="case-main">
+      <section class="case-intro">
+        <p class="section-kicker">01 / {es ? 'Caso de estudio' : 'Case study'}</p>
+        <h1>{data.title}<span>.</span></h1>
+        <p class="case-tagline">{data.tagline}</p>
+        <div class="case-meta"><div><span>{es ? 'Rol' : 'Role'}</span><strong>{data.role}</strong></div><div><span>Stack</span><strong>{data.stack.join(' · ')}</strong></div></div>
+      </section>
+      <section class="case-visual" aria-label={es ? 'Composición gráfica del proyecto' : 'Project graphic composition'}><span>{data.title}</span><b aria-hidden="true">↗</b></section>
+      <section class="case-story"><div class="section-kicker">02 / {es ? 'Contexto' : 'Context'}</div><div><h2>{es ? 'Del concepto a una experiencia usable.' : 'From concept to a usable experience.'}</h2><p>{data.summary}</p></div></section>
+      {data.challenge && <section class="case-story"><div class="section-kicker">03 / {es ? 'Desafío' : 'Challenge'}</div><div><h2>{data.challenge}</h2></div></section>}
+      <section class="case-columns">
+        <div><p class="section-kicker">04 / {es ? 'Proceso' : 'Process'}</p>{data.process.map(item => <p>{item}</p>)}</div>
+        <div><p class="section-kicker">05 / {es ? 'Decisiones' : 'Decisions'}</p>{data.decisions.map(item => <p>{item}</p>)}</div>
+        <div><p class="section-kicker">06 / {es ? 'Resultado' : 'Outcome'}</p>{data.outcomes.map(item => <p>{item}</p>)}</div>
+      </section>
+      <section class="case-links"><h2>{es ? 'Explorá el proyecto.' : 'Explore the project.'}</h2><div>{data.links.demo && <a href={data.links.demo} target="_blank" rel="noreferrer">{es ? 'Ver demo' : 'Live demo'} ↗</a>}{data.links.code && <a href={data.links.code} target="_blank" rel="noreferrer">{es ? 'Ver código' : 'View code'} ↗</a>}<a href={`/${data.locale}/#selected-work`}>{es ? 'Todos los proyectos' : 'All work'} ←</a></div></section>
+    </main>
+    <footer><span class="wordmark" aria-label="ddra">ddra<span aria-hidden="true"></span></span><span>Daniel De Ruvo</span><a href="mailto:deruvodaniel@gmail.com">{es ? 'Hablemos' : 'Let’s talk'} ↗</a></footer>
+  </div>
+</BaseLayout>

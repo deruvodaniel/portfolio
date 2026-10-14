@@ -1,0 +1,7 @@
+{
+  "slug": "fuelcore", "locale": "en", "title": "Fuelcore", "tagline": "Personalized nutrition with generative AI.",
+  "year": null, "role": null, "stack": ["Next.js", "Firebase", "Gemini API"],
+  "summary": "A nutrition and training product with onboarding, personalized meal plans, AI-assisted recipes, progress tracking and server API routes.",
+  "challenge": null, "process": [], "decisions": [], "outcomes": [],
+  "links": { "demo": null, "code": null }, "media": [], "caseStudyReady": false, "order": 2
+}
